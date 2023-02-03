@@ -14,9 +14,8 @@ public class Contact {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Contact(int id, String name, String email, String phoneNo, String about, int userId) {
+	public Contact(String name, String email, String phoneNo, String about, int userId) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.phoneNo = phoneNo;

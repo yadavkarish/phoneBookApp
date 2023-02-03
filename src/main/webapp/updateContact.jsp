@@ -6,6 +6,9 @@
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 <%@include file="component/allCss.jsp"%>
+<%@ page import="com.android.util.DBConnection"%>
+<%@ page import="com.android.entity.Contact"%>
+<%@ page import="com.android.model.ContactDao"%>
 </head>
 <body>
 	<%@include file="component/navbar.jsp"%>
@@ -18,45 +21,41 @@
 			<div class="col-md-4 offset-md-4">
 				<div class="card">
 					<div class="card-body">
-						<h4 class="text-center text-success">Add Contact Page</h4>
+						<h4 class="text-center text-success">Update Contact Page</h4>
 						<%
-						String succMsg = (String) session.getAttribute("succMsg");
 						String failMsg = (String) session.getAttribute("failMsg");
-						if (succMsg != null) {
-						%>
-						<h6 class="text-success text-center"><%=succMsg%></h6>
-						<%
-						session.removeAttribute("succMsg");
-						} if (failMsg != null) {
+						if (failMsg != null) {
 						%>
 						<h6 class="text-danger text-center"><%=failMsg%></h6>
 						<%
 						session.removeAttribute("failMsg");
 						}
 						%>
-						<form action="addContact" method="post">
-						<%if(user!=null){ %>
-						<input name="userId" type="hidden" value="<%=user.getId()%>">
-						<%} %>
+						<form action="UpdateContact" method="post">
+						<%
+						int cid=Integer.parseInt(request.getParameter("cid"));
+						ContactDao cd = new ContactDao(DBConnection.getConnection());
+						Contact contact = cd.getContactById(cid);
+						%>
 							<div class="form-group">
-								<label for="exexampleInputName1">Enter Name</label> <input name="name"
+								<label for="exexampleInputName1">Enter Name</label> <input value="<%=contact.getName()%>" name="name"
 									type="text" class="form-control" id="exampleInputName1">
 							</div>
 							<div class="form-group">
-								<label for="exampleInputEmail1">Email address</label> <input name="email"
+								<label for="exampleInputEmail1">Email address</label> <input value="<%=contact.getEmail()%>" name="email"
 									type="email" class="form-control" id="exampleInputEmail1"
 									aria-describedby="emailHelp">
 							</div>
 							<div class="form-group">
-								<label for="exampleInputNo1">Enter phone number</label> <input name="phoneNo"
+								<label for="exampleInputNo1">Enter phone number</label> <input value="<%=contact.getPhoneNo()%>" name="phoneNo"
 									type="text" class="form-control" id="exampleInputNo1">
 							</div>
 							<div class="form-group">
-								<textarea class="form-control" row="3" cols="" name="about" placeholder="Enter About...." ></textarea>
+								<textarea class="form-control" row="3" cols="" name="about" placeholder="Enter About...." ><%=contact.getAbout()%>"</textarea>
 							</div>
 
 							<div class="text-center mt-2">
-								<button type="submit" class="btn btn-success">Save Contact</button>
+								<button type="submit" class="btn btn-success">Update Contact</button>
 							</div>
 
 						</form>

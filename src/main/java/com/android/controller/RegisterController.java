@@ -21,9 +21,12 @@ public class RegisterController extends HttpServlet {
 		String name=request.getParameter("name");
 		String email=request.getParameter("email");
 		String password=request.getParameter("password");
+		System.out.println(name+" "+email+" "+password);
 		
 		User user=new User(name,email,password);
+		
 		UserDao userDao= new UserDao(DBConnection.getConnection());
+		System.out.println(DBConnection.getConnection());
 		boolean register=userDao.userRegister(user);
 		
 		HttpSession session=request.getSession();
